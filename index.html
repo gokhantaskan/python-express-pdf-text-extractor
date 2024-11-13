@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="stylesheet"
+      href="main.css"
+    />
+    <title>PDF Text Extractor</title>
+  </head>
+
+  <body>
+    <h1>PDF Text Extractor</h1>
+    <form id="uploadForm">
+      <input
+        type="file"
+        id="pdfFile"
+        accept=".pdf"
+        required
+      />
+      <button
+        type="submit"
+        id="submitBtn"
+      >
+        Extract Text
+      </button>
+    </form>
+    <div
+      class="file-info"
+      id="fileInfo"
+    ></div>
+    <div id="result"></div>
+
+    <script>
+      const uploadForm = document.getElementById("uploadForm");
+      const submitBtn = document.getElementById("submitBtn");
+      const resultDiv = document.getElementById("result");
+      const fileInfo = document.getElementById("fileInfo");
+      const fileInput = document.getElementById("pdfFile");
+
+      fileInput.addEventListener("change", e => {
+        const file = e.target.files[0];
+        if (file) {
+          const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+          fileInfo.textContent = `Selected file: ${file.name} (${sizeMB} MB)`;
+        } else {
+          fileInfo.textContent = "";
+        }
+      });
+
+      uploadForm.addEventListener("submit", async e => {
+        e.preventDefault();
+        const file = fileInput.files[0];
+
+        if (!file) {
+          resultDiv.textContent = "Please select a PDF file";
+          resultDiv.className = "error";
+          return;
+        }
+
+        // Check file size (max 10MB)
+        if (file.size > 10 * 1024 * 1024) {
+          resultDiv.textContent = "File size exceeds 10MB limit";
+          resultDiv.className = "error";
+          return;
+        }
+
+        try {
+          // Disable form during processing
+          submitBtn.disabled = true;
+          fileInput.disabled = true;
+          resultDiv.className = "loading";
+          resultDiv.textContent = "Extracting text from PDF...";
+
+          const formData = new FormData();
+          formData.append("pdf", file);
+
+          const response = await fetch("http://localhost:3000/api/parse-pdf", {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          if (response.ok && data.success) {
+            resultDiv.textContent = data.data.text || "No text found in PDF";
+            resultDiv.className = "";
+          } else {
+            resultDiv.textContent = `Error: ${data.error || data.data?.error || "Failed to process PDF"}`;
+            resultDiv.className = "error";
+          }
+        } catch (error) {
+          resultDiv.textContent = `Error: ${error.message || "Failed to connect to server"}`;
+          resultDiv.className = "error";
+        } finally {
+          // Re-enable form
+          submitBtn.disabled = false;
+          fileInput.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
