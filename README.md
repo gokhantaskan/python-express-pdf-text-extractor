@@ -12,9 +12,15 @@ This is a hybrid Node.js/Python service that provides robust PDF text extraction
 - TypeScript for type safety and better development experience
 - Error handling middleware
 - File upload support via `multer`
+- Docker support for easy deployment and development
 
 ## Requirements
 
+### Using Docker (Recommended)
+- Docker
+- Docker Compose
+
+### Manual Installation
 - Node.js >= 18
 - Python 3.x
 - Required Python packages:
@@ -23,38 +29,59 @@ This is a hybrid Node.js/Python service that provides robust PDF text extraction
   - pytesseract
 - Tesseract OCR (for image-based PDFs)
 
-## Installation
+## Installation & Usage
+
+### Using Docker (Recommended)
 
 1. Clone the repository
+
+2. Build and start the container:
+   ```bash
+   docker-compose up --build
+   ```
+
+   This will:
+   - Build the Docker image with all required dependencies
+   - Start the server on port 3000
+   - Mount your local directory for development
+
+3. For subsequent runs, simply use:
+   ```bash
+   docker-compose up
+   ```
+
+### Manual Installation
+
+1. Clone the repository
+
 2. Install Node.js dependencies:
    ```bash
-   # `corepack enable` if you want don't have pnpm installed
+   # `corepack enable` if you don't have pnpm installed
    pnpm install
    ```
+
 3. Install Python dependencies:
    ```bash
-   pip install pdfminer.six pdf2image pytesseract
+   pip install -r requirements.txt
    ```
+
 4. Install Tesseract OCR (platform specific):
    - macOS: `brew install tesseract`
    - Ubuntu: `sudo apt-get install tesseract-ocr`
    - Windows: Download installer from [GitHub](https://github.com/UB-Mannheim/tesseract/wiki)
 
-## Usage
-
-1. Start the development server:
-
+5. Start the development server:
    ```bash
    pnpm dev
    ```
 
-   This will start the server on port 3000
+## API Usage
 
-2. The API endpoint will be available at:
-   ```
-   POST /api/parse-pdf
-   ```
-   Send a PDF file in the request body to extract its text content.
+The API endpoint will be available at:
+```
+POST /api/parse-pdf
+```
+Send a PDF file in the request body to extract its text content.
 
 ## Project Structure
 
@@ -70,8 +97,11 @@ This is a hybrid Node.js/Python service that provides robust PDF text extraction
 │   ├── utils/          # Utility functions
 │   └── server.ts       # Express server setup
 ├── pdf_parser.py       # Python PDF processing script
-├── package.json        # Node.js dependencies and scripts
-└── tsconfig.json       # TypeScript configuration
+├── Dockerfile         # Docker configuration
+├── docker-compose.yml # Docker Compose configuration
+├── requirements.txt   # Python dependencies
+├── package.json       # Node.js dependencies and scripts
+└── tsconfig.json      # TypeScript configuration
 ```
 
 ## License
