@@ -20,7 +20,7 @@ class PDFExtractor:
         try:
             extracted_text = extract_text(file_path)
             if not extracted_text.strip():
-                logging.info("No text extracted by pdfminer, trying image-based extraction")
+                logging.error("No text extracted by pdfminer, trying image-based extraction")
                 extracted_text = PDFExtractor.extract_text_from_image_pdf(file_path)
             # Sanitize the extracted text
             extracted_text = PDFExtractor.sanitize_text(extracted_text)
@@ -59,8 +59,14 @@ def process_pdf_from_stdin():
         pdf_data = sys.stdin.buffer.read()
         
         if not pdf_data:
-            error_result = {'error': 'No PDF data received'}
-            sys.stderr.write(json.dumps(error_result))
+            error_result = {'success': False, 'error': 'No PDF data received'}
+            print(json.dumps(error_result), file=sys.stderr)
+            sys.exit(1)
+
+        # Validate PDF signature
+        if not pdf_data.startswith(b'%PDF'):
+            error_result = {'success': False, 'error': 'Not a valid PDF file'}
+            print(json.dumps(error_result), file=sys.stderr)
             sys.exit(1)
         
         # Save to temporary file
@@ -73,8 +79,8 @@ def process_pdf_from_stdin():
             text = PDFExtractor.to_text(tmp_path)
             
             if not text.strip():
-                error_result = {'error': 'No text could be extracted from the PDF'}
-                sys.stderr.write(json.dumps(error_result))
+                error_result = {'success': False, 'error': 'No text could be extracted from the PDF'}
+                print(json.dumps(error_result), file=sys.stderr)
                 sys.exit(1)
             
             # Print the result as JSON to stdout
@@ -82,7 +88,7 @@ def process_pdf_from_stdin():
                 'success': True,
                 'text': text
             }
-            sys.stdout.write(json.dumps(result))
+            print(json.dumps(result))
             sys.stdout.flush()
             
         finally:
@@ -96,7 +102,7 @@ def process_pdf_from_stdin():
             'success': False,
             'error': str(e)
         }
-        sys.stderr.write(json.dumps(error_result))
+        print(json.dumps(error_result), file=sys.stderr)
         sys.exit(1)
 
 if __name__ == '__main__':
