@@ -1,7 +1,8 @@
-import express from "express";
 import cors from "cors";
-import pdfRoutes from "./routes/pdfRoutes";
+import express from "express";
+
 import { errorHandler } from "./middlewares/errorHandler";
+import * as routes from "./routes";
 
 const app = express();
 
@@ -20,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use("/api", pdfRoutes);
+app.use("/api", routes.pdfRoutes);
 
 // Error handling
 app.use(errorHandler);

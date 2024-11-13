@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "format": "prettier . --write -l -u",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "lint": "eslint . --fix",
+    "format": "prettier . --write -l -u"
   },
   "keywords": [],
   "author": "",
@@ -17,12 +18,19 @@
     "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.14.0",
     "@types/express": "^5.0.0",
     "@types/multer": "^1.4.12",
+    "eslint": "^9.14.0",
+    "eslint-config-flat-gitignore": "^0.3.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "globals": "^15.12.0",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.14.0"
   },
   "packageManager": "pnpm@9.12.3",
   "engines": {

@@ -1,5 +1,6 @@
-import multer from "multer";
 import { Request } from "express";
+import multer from "multer";
+
 import { createError } from "../utils";
 import { MAX_FILE_SIZE } from "./constants";
 

@@ -1,6 +1,7 @@
 import express from "express";
-import { handlePdfParse } from "../controllers/pdfController";
+
 import { upload } from "../config/multer";
+import { handlePdfParse } from "../controllers/pdfController";
 
 const router = express.Router();
 

@@ -1,5 +1,8 @@
 # Use Node.js as base image
-FROM node:18-bullseye
+FROM node:lts-bullseye
+
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 # Install Python and required system dependencies
 RUN apt-get update && apt-get install -y \
