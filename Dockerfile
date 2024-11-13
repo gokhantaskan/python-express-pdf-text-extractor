@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
+# Copy Python requirements and install Python dependencies
+COPY /scripts/requirements.txt .
+RUN pip3 install -r requirements.txt
+
 # Copy package files
 COPY package*.json pnpm-lock.yaml ./
 
@@ -21,15 +25,8 @@ RUN corepack enable
 # Install Node.js dependencies
 RUN pnpm install
 
-# Copy Python requirements and install Python dependencies
-COPY requirements.txt .
-RUN pip3 install -r requirements.txt
-
 # Copy the rest of the application
 COPY . .
-
-# Build TypeScript
-RUN pnpm tsc
 
 # Expose the port the app runs on
 EXPOSE 3000

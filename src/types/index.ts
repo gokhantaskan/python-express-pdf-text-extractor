@@ -17,6 +17,6 @@ export type PdfParserResponse = {
   };
   error?: string;
 } & (
-    | { success: true, data: { text: string; [key: string]: any } }
-    | { success: false; error: string }
-  );
+  | { success: true; data: { text: string; [key: string]: any } }
+  | { success: false; error: string }
+);
