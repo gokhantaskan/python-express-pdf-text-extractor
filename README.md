@@ -52,7 +52,7 @@ This is a hybrid Node.js/Python service that provides robust PDF text extraction
 
 2. The API endpoint will be available at:
    ```
-   POST /api/extract
+   POST /api/parse-pdf
    ```
    Send a PDF file in the request body to extract its text content.
 
