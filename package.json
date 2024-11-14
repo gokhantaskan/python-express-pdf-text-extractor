@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "lint": "eslint . --fix",
+    "type-check": "tsc --noEmit",
     "format": "prettier . --write -l -u"
   },
   "keywords": [],

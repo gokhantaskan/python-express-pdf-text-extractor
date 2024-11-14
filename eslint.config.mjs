@@ -8,7 +8,7 @@ import tseslint from "typescript-eslint";
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   gitignore({
-    files: [".gitignore"]
+    files: [".gitignore"],
   }),
   { files: ["**/*.{js,mjs,cjs,ts,mts,cts}"] },
   { languageOptions: { globals: globals.node, ecmaVersion: "latest", sourceType: "module" } },
@@ -19,8 +19,6 @@ export default [
     plugins: {
       "simple-import-sort": simpleImportSort,
     },
-  },
-  {
     rules: {
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
