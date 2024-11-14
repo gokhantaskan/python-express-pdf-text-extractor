@@ -1,6 +1,6 @@
-import { ChildProcess } from "child_process";
+import type { ChildProcess } from "child_process";
 
-import { PdfParserResponse } from "../types";
+import type { PdfParserResponse } from "../types";
 import { createError } from "../utils";
 
 export const handlePythonProcess = (

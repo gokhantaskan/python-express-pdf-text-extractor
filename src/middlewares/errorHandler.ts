@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 
-import { CustomError, PdfParserResponse } from "../types";
+import type { CustomError, PdfParserResponse } from "../types";
 
 export const errorHandler = (err: CustomError, req: Request, res: Response) => {
   console.error("Error:", err);

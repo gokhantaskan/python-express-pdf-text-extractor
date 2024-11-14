@@ -1,4 +1,4 @@
-import { CustomError } from "../types";
+import type { CustomError } from "../types";
 
 export function isPdfFile(buffer: Buffer): boolean {
   return buffer.toString("hex").startsWith("255044462d");

@@ -1,9 +1,9 @@
 import { spawn } from "child_process";
-import { NextFunction, Response } from "express";
+import type { NextFunction, Response } from "express";
 
 import { PYTHON_SCRIPT_PATH } from "../config/constants";
 import { handlePythonProcess } from "../services/pythonService";
-import { MulterRequest } from "../types";
+import type { MulterRequest } from "../types";
 import { createError, isPdfFile } from "../utils";
 
 export async function handlePdfParse(req: MulterRequest, res: Response, next: NextFunction) {
