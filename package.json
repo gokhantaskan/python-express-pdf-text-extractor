@@ -1,17 +1,17 @@
 {
   "name": "pypars",
   "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "main": "index.js",
   "scripts": {
     "dev": "env-cmd -f .env.development ts-node-dev --respawn --transpile-only src/server.ts",
+    "format": "prettier . --write -l -u",
     "lint": "eslint . --fix",
-    "type-check": "tsc --noEmit",
-    "format": "prettier . --write -l -u"
+    "type-check": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.1",
